@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="dist">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../Downs/jasper Lib/jasper Lib/dist" />
+      <root url="file://$PROJECT_DIR$/../../Downs/jasper Lib/jasper Lib/lib" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/../../Downs/jasper Lib/jasper Lib/dist" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../Downs/jasper Lib/jasper Lib/lib" recursive="false" />
+  </library>
+</component>
