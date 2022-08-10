@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="221.0" prefWidth="263.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NewMedView">
+   <children>
+      <ImageView fitHeight="320.0" fitWidth="472.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/kp4Zno_1.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="98.0" layoutY="125.0" prefHeight="18.0" prefWidth="89.0" text="Number" />
+      <TextField fx:id="medNo" layoutX="201.0" layoutY="122.0" />
+      <TextField fx:id="medName" layoutX="201.0" layoutY="179.0" />
+      <Label layoutX="98.0" layoutY="182.0" prefHeight="18.0" prefWidth="89.0" text="Name" />
+      <Button layoutX="201.0" layoutY="238.0" mnemonicParsing="false" onAction="#submitMed" text="Submit" />
+      <ImageView blendMode="MULTIPLY" fitHeight="110.0" fitWidth="150.0" layoutX="236.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/3211a383691253.Y3JvcCw3MjEsNTY0LDQyLDMz.png" />
+         </image>
+      </ImageView>
+      <Hyperlink layoutX="33.0" layoutY="226.0" onAction="#goBack" text="Return" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="507.0" prefWidth="791.0" stylesheets="@adddep.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AddDocOrNurse">
+   <children>
+      <ImageView fitHeight="660.0" fitWidth="1104.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/d5032a8070330382f18a13055c7ba278.gif" />
+         </image>
+      </ImageView>
+      <Button layoutX="395.0" layoutY="510.0" mnemonicParsing="false" onAction="#submit" prefHeight="69.0" prefWidth="225.0" text="add" />
+      <TextField fx:id="nameField" layoutX="272.0" layoutY="206.0" promptText="Name" />
+      <TextField fx:id="phoneField" layoutX="57.0" layoutY="290.0" promptText="Phone" />
+      <TextField fx:id="addressField" layoutX="272.0" layoutY="290.0" promptText="Address" />
+      <TextField fx:id="emailField" layoutX="57.0" layoutY="206.0" promptText="Email" />
+      <TextField fx:id="ssnField" layoutX="272.0" layoutY="122.0" promptText="SSN" />
+      <TextField fx:id="idField" layoutX="57.0" layoutY="119.0" promptText="StuffID" />
+      <CheckBox fx:id="cB1" layoutX="570.0" layoutY="80.0" mnemonicParsing="false" text="Saturday" textFill="#20a4c1" />
+      <CheckBox fx:id="cB2" layoutX="570.0" layoutY="134.0" mnemonicParsing="false" text="Sunday" textFill="#20a4c1" />
+      <CheckBox fx:id="cB3" layoutX="570.0" layoutY="184.0" mnemonicParsing="false" text="Monday" textFill="#20a4c1" />
+      <CheckBox fx:id="cB4" layoutX="570.0" layoutY="234.0" mnemonicParsing="false" text="Tuesday" textFill="#20a4c1" />
+      <CheckBox fx:id="cB5" layoutX="570.0" layoutY="284.0" mnemonicParsing="false" text="Wednesday" textFill="#20a4c1" />
+      <CheckBox fx:id="cB6" layoutX="570.0" layoutY="334.0" mnemonicParsing="false" text="Thursday" textFill="#20a4c1" />
+      <CheckBox fx:id="cB7" layoutX="570.0" layoutY="384.0" mnemonicParsing="false" text="Friday" textFill="#20a4c1" />
+      <TextField fx:id="fromF1" layoutX="681.0" layoutY="80.0" promptText="From" />
+      <TextField fx:id="toF1" layoutX="885.0" layoutY="80.0" promptText="To" />
+      <TextField fx:id="fromF2" layoutX="681.0" layoutY="130.0" promptText="From" />
+      <TextField fx:id="toF2" layoutX="885.0" layoutY="130.0" promptText="To" />
+      <TextField fx:id="fromF3" layoutX="681.0" layoutY="180.0" promptText="From" />
+      <TextField fx:id="toF3" layoutX="885.0" layoutY="180.0" promptText="To" />
+      <TextField fx:id="fromF4" layoutX="681.0" layoutY="230.0" promptText="From" />
+      <TextField fx:id="toF4" layoutX="885.0" layoutY="230.0" promptText="To" />
+      <TextField fx:id="fromF5" layoutX="681.0" layoutY="280.0" promptText="From" />
+      <TextField fx:id="toF5" layoutX="885.0" layoutY="280.0" promptText="To" />
+      <TextField fx:id="fromF6" layoutX="681.0" layoutY="330.0" promptText="From" />
+      <TextField fx:id="toF6" layoutX="885.0" layoutY="330.0" promptText="To" />
+      <TextField fx:id="fromF7" layoutX="681.0" layoutY="380.0" promptText="From" />
+      <TextField fx:id="toF7" layoutX="885.0" layoutY="380.0" promptText="To" />
+      <ImageView blendMode="LIGHTEN" fitHeight="150.0" fitWidth="200.0" layoutX="940.0" layoutY="470.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/work-computer.gif" />
+         </image>
+      </ImageView>
+      <RadioButton fx:id="docRaBut" layoutX="395.0" layoutY="452.0" mnemonicParsing="false" text="Doctor" textFill="#ff9696">
+         <toggleGroup>
+            <ToggleGroup fx:id="Type" />
+         </toggleGroup>
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </RadioButton>
+      <RadioButton fx:id="nurRaBut" layoutX="574.0" layoutY="452.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="140.0" text="Nurse" textFill="#ff9696">
+         <toggleGroup>
+            <ToggleGroup fx:id="Type" />
+         </toggleGroup>
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </RadioButton>
+      <PasswordField fx:id="passField" layoutX="163.0" layoutY="368.0" promptText="password" />
+      <PasswordField fx:id="confPassField" layoutX="163.0" layoutY="414.0" promptText="Confirm Password" />
+      <Hyperlink layoutX="98.0" layoutY="510.0" onAction="#goBack" text="Return" />
+      <ChoiceBox fx:id="IdBox" layoutX="54.0" layoutY="67.0" prefHeight="26.0" prefWidth="140.0" />
+      <Label fx:id="nameTextField" layoutX="272.0" layoutY="72.0" prefHeight="18.0" prefWidth="140.0" text="Department" textFill="RED">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="pane" prefHeight="323.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MainViewForManager">
+   <children>
+      <TabPane blendMode="ADD" prefHeight="466.0" prefWidth="708.0" style="-fx-background-image: #FFFFFF;" stylesheets="@file.css" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="View">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="433.0" prefWidth="698.0">
+                     <children>
+                        <AnchorPane prefHeight="437.0" prefWidth="708.0">
+                           <children>
+                              <ImageView fitHeight="440.0" fitWidth="804.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/881563d6444b370fa4ceea0c3183bb4c.gif" />
+                                 </image>
+                              </ImageView>
+                              <Button layoutX="406.0" layoutY="167.0" mnemonicParsing="false" onAction="#viewDocsRep" prefHeight="38.0" prefWidth="194.0" text="View Doctors Report" />
+                              <Button layoutX="144.0" layoutY="167.0" mnemonicParsing="false" onAction="#viewPatsRep" prefHeight="38.0" prefWidth="194.0" text="View Patients Report" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="edit">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane prefHeight="438.0" prefWidth="708.0">
+                           <children>
+                              <ImageView fitHeight="440.0" fitWidth="794.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/881563d6444b370fa4ceea0c3183bb4c.gif" />
+                                 </image>
+                              </ImageView>
+                              <Button layoutX="91.0" layoutY="138.0" mnemonicParsing="false" onAction="#goToAddDep" prefHeight="26.0" prefWidth="194.0" text="Add a Department" />
+                              <Button layoutX="251.0" layoutY="207.0" mnemonicParsing="false" onAction="#goToAddSec" prefHeight="26.0" prefWidth="194.0" text="Add a Secretary" />
+                              <Button layoutX="397.0" layoutY="138.0" mnemonicParsing="false" onAction="#goToModifyDep" prefHeight="26.0" prefWidth="194.0" text="Modify a Department" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+          <Tab text="profile">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="475.0" prefWidth="706.0">
+                     <children>
+                        <AnchorPane layoutX="-2.0" layoutY="-1.0" prefHeight="441.0" prefWidth="708.0">
+                           <children>
+                              <ImageView blendMode="HARD_LIGHT" fitHeight="440.0" fitWidth="794.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/881563d6444b370fa4ceea0c3183bb4c.gif" />
+                                 </image>
+                              </ImageView>
+                              <Button layoutX="586.0" layoutY="379.0" mnemonicParsing="false" onAction="#logOut" prefHeight="38.0" prefWidth="94.0" text="Log Out" />
+                              <Button layoutX="134.0" layoutY="261.0" mnemonicParsing="false" onAction="#goToMakeSuccesor" prefHeight="38.0" prefWidth="166.0" text="Make a successor" />
+                              <Button layoutX="454.0" layoutY="261.0" mnemonicParsing="false" onAction="#visitPastMans" prefHeight="38.0" prefWidth="167.0" text="View Past Managers" />
+                              <Label fx:id="idLabel" layoutX="217.0" layoutY="74.0" prefHeight="30.0" prefWidth="154.0" text="ID:" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font></Label>
+                              <Label fx:id="nameLabel" layoutX="217.0" layoutY="105.0" prefHeight="36.0" prefWidth="194.0" text="Name:" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font></Label>
+                              <TableView layoutX="454.0" layoutY="80.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+                                <columns>
+                                  <TableColumn prefWidth="75.0" text="C1" />
+                                  <TableColumn prefWidth="75.0" text="C2" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

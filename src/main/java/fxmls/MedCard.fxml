@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="132.0" prefWidth="254.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MedCard">
+   <children>
+      <Label fx:id="nameAndDo" layoutX="14.0" layoutY="14.0" prefHeight="23.0" prefWidth="222.0" textFill="RED">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="docLab" layoutX="14.0" layoutY="48.0" prefHeight="18.0" prefWidth="222.0" />
+      <Label fx:id="datLab" layoutX="14.0" layoutY="68.0" prefHeight="18.0" prefWidth="222.0" />
+      <Label fx:id="amouLab" layoutX="14.0" layoutY="86.0" prefHeight="18.0" prefWidth="222.0" />
+   </children>
+</AnchorPane>

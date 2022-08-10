@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="583.0" prefWidth="645.0" stylesheets="@makeASuccessor.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MakeASuccessorForManager">
+   <children>
+      <ImageView fitHeight="656.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/v546batch3-mynt-34-badgewatercolor_1.jpg" />
+         </image>
+      </ImageView>
+      <TextField fx:id="idField" layoutX="716.0" layoutY="407.0" prefHeight="26.0" prefWidth="220.0" promptText="ID" />
+      <PasswordField fx:id="oldPassField" layoutX="58.0" layoutY="252.0" prefHeight="26.0" prefWidth="200.0" promptText="Old Password" />
+      <PasswordField fx:id="newPassField" layoutX="719.0" layoutY="110.0" prefHeight="26.0" prefWidth="200.0" promptText="New Password" />
+      <PasswordField fx:id="newPassConfirmField" layoutX="719.0" layoutY="164.0" prefHeight="26.0" prefWidth="200.0" promptText="Confirm New Password" />
+      <TextField fx:id="sEmail" layoutX="719.0" layoutY="257.0" prefHeight="26.0" prefWidth="220.0" promptText="Email2" />
+      <TextField fx:id="fEmail" layoutX="719.0" layoutY="210.0" prefHeight="26.0" prefWidth="220.0" promptText="Email1" />
+      <TextField fx:id="addField" layoutX="719.0" layoutY="315.0" prefHeight="26.0" prefWidth="220.0" promptText="Addres" />
+      <TextField fx:id="phoneField" layoutX="716.0" layoutY="363.0" prefHeight="26.0" prefWidth="220.0" promptText="Phone" />
+      <TextField fx:id="nameField" layoutX="48.0" layoutY="164.0" prefHeight="26.0" prefWidth="220.0" promptText="Name" />
+      <Hyperlink layoutX="95.0" layoutY="569.0" onAction="#goBack" prefHeight="38.0" prefWidth="100.0" text="Back">
+         <font>
+            <Font size="18.0" />
+         </font></Hyperlink>
+      <Button fx:id="button1" layoutX="453.0" layoutY="556.0" mnemonicParsing="false" onAction="#submitManager" prefHeight="26.0" prefWidth="173.0" text="Confirm" />
+      <ImageView blendMode="DIFFERENCE" fitHeight="359.0" fitWidth="395.0" layoutX="313.0" layoutY="91.0" opacity="0.59" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/4705530785b66c5fcbdc84fba4315dc4_w200.gif" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="476.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ManagerLogIN">
+   <children>
+      <PasswordField fx:id="manPassField" layoutX="245.0" layoutY="181.0" prefHeight="26.0" prefWidth="238.0" promptText="Password" />
+      <Button fx:id="logInButton" layoutX="293.0" layoutY="226.0" mnemonicParsing="false" onAction="#managerLogIn" text="Log In" />
+      <Button fx:id="verifyButton" layoutX="227.0" layoutY="326.0" mnemonicParsing="false" onAction="#checkThePass" text="Verify" />
+      <PasswordField fx:id="forgPassPass1" layoutX="319.0" layoutY="290.0" prefHeight="26.0" prefWidth="191.0" promptText="Verification Password 1" />
+      <PasswordField fx:id="forgPassPass2" layoutX="319.0" layoutY="345.0" prefHeight="26.0" prefWidth="191.0" promptText="Verification Password 2" />
+      <TextField fx:id="manIDField" layoutX="246.0" layoutY="130.0" prefHeight="26.0" prefWidth="238.0" promptText="Id" />
+      <Hyperlink layoutX="557.0" layoutY="227.0" onAction="#enableForgPass" text="Forgot Password??" />
+      <Hyperlink layoutX="38.0" layoutY="413.0" onAction="#returnToMainView" text="Back" />
+   </children>
+</AnchorPane>

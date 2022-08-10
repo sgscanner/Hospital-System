@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="490.0" prefWidth="595.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.DepWholeStuff">
+   <children>
+      <ImageView fitHeight="528.0" fitWidth="1175.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/pngtree-modern-double-color-futuristic-neon-background-image_351866.jpg" />
+         </image>
+      </ImageView>
+      <ImageView blendMode="ADD" fitHeight="310.0" fitWidth="308.0" layoutX="410.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/91135f52896a9cb9f14b965282545f5c.gif" />
+         </image>
+      </ImageView>
+      <TableView fx:id="docsTable" layoutX="206.0" layoutY="82.0" opacity="0.79" prefHeight="410.0" prefWidth="242.0">
+        <columns>
+          <TableColumn fx:id="docInfo" prefWidth="240.79999351501465" text="Doctors" />
+        </columns>
+      </TableView>
+      <TableView fx:id="nurTable" layoutX="676.0" layoutY="82.0" opacity="0.79" prefHeight="410.0" prefWidth="242.0">
+         <columns>
+            <TableColumn fx:id="nurInfo" prefWidth="240.79999351501465" text="Nurses" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

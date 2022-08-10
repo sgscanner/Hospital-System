@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="479.0" prefWidth="825.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.PatientEnter">
+   <children>
+      <ImageView fitHeight="550.0" fitWidth="1093.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/63153306-doctor-using-computer-to-explain-patient-s-condition-healthcare-and-medicine-concept-hospital-office.jpg" />
+         </image>
+      </ImageView>
+      <TextField fx:id="numTF" layoutX="639.0" layoutY="199.0" promptText="inter your ID" />
+      <ScrollPane layoutX="352.0" layoutY="50.0" prefHeight="324.0" prefWidth="256.0">
+         <content>
+            <VBox fx:id="treatsVBox" prefHeight="200.0" prefWidth="100.0" />
+         </content>
+      </ScrollPane>
+      <ScrollPane layoutX="30.0" layoutY="45.0" prefHeight="334.0" prefWidth="256.0">
+         <content>
+            <VBox fx:id="visitsVBox" prefHeight="200.0" prefWidth="100.0" />
+         </content>
+      </ScrollPane>
+      <Button layoutX="688.0" layoutY="319.0" mnemonicParsing="false" onAction="#find" text="search" />
+      <Hyperlink layoutX="488.0" layoutY="478.0" onAction="#clearAll" text="Clear">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Hyperlink>
+      <Hyperlink layoutX="223.0" layoutY="476.0" onAction="#returnToMainView" text="Back">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Hyperlink>
+      <RadioButton fx:id="patRaBut" layoutX="688.0" layoutY="284.0" mnemonicParsing="false" text="Patient ID">
+         <toggleGroup>
+            <ToggleGroup fx:id="id" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="ssnRaBut" layoutX="691.0" layoutY="245.0" mnemonicParsing="false" text="SSN" toggleGroup="$id" />
+   </children>
+</AnchorPane>
