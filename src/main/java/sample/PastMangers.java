@@ -28,14 +28,12 @@ import java.util.ResourceBundle;
 public class PastMangers implements Initializable {
 
 
-
     @FXML
     private TableColumn<ManagerInformation, String> endDateCol;
 
 
-
     @FXML
-    private TableColumn<ManagerInformation, String > idCol;
+    private TableColumn<ManagerInformation, String> idCol;
 
     @FXML
     private TableColumn<ManagerInformation, String> nameCol;
@@ -53,7 +51,7 @@ public class PastMangers implements Initializable {
         ResultSet resultSet = connection.createStatement()
                 .executeQuery("Select * from managers where currently = 0");
         List<ManagerInformation> list = new LinkedList<>();
-        while (resultSet.next()){
+        while (resultSet.next()) {
             list.add(new ManagerInformation(
                     resultSet.getString("manager_id"),
                     resultSet.getString("manager_name"),
@@ -65,12 +63,9 @@ public class PastMangers implements Initializable {
         ObservableList<ManagerInformation> observableList = FXCollections.observableList(list);
         idCol.setCellValueFactory(new PropertyValueFactory<ManagerInformation, String>("id"));
         nameCol.setCellValueFactory(new PropertyValueFactory<ManagerInformation, String>("Name"));
-        stDateCol.setCellValueFactory(new PropertyValueFactory<ManagerInformation,String>("startDate"));
+        stDateCol.setCellValueFactory(new PropertyValueFactory<ManagerInformation, String>("startDate"));
         endDateCol.setCellValueFactory(new PropertyValueFactory<ManagerInformation, String>("endDate"));
         table.setItems(observableList);
-
-
-
 
 
     }
@@ -79,6 +74,7 @@ public class PastMangers implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
+
     @FXML
     public void goBack(ActionEvent event) throws SQLException, IOException {
         ResultSet resultSet = DriverManager.getConnection(Main.URL, Main.USER_NAME, Main.PASSWORD).createStatement()
@@ -87,12 +83,14 @@ public class PastMangers implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxmls/MainViewForManager.fxml"));
         Parent root = loader.load();
         MainViewForManager mainViewForManager = loader.getController();
-        mainViewForManager.setNameAndId(resultSet.getString("manager_name"), resultSet.getString("manager_id"));
-        ((Stage)((Node)event.getSource()).getScene().getWindow()).setScene(new Scene(root));
+        mainViewForManager.setNameAndId(resultSet.getString("manager_name"),
+                resultSet.getString("manager_id"));
+        ((Stage) ((Node) event.getSource()).getScene().getWindow()).setScene(new Scene(root));
     }
+
     @FXML
     public void deleteSelections() throws SQLException {
-        if(JOptionPane.showConfirmDialog(null, "Are you sure?") == JOptionPane.YES_OPTION){
+        if (JOptionPane.showConfirmDialog(null, "Are you sure?") == JOptionPane.YES_OPTION) {
             ManagerInformation managerInformation = table.getSelectionModel().getSelectedItem();
             String id = managerInformation.getId();
             Connection connection = DriverManager.getConnection(Main.URL, Main.USER_NAME, Main.PASSWORD);

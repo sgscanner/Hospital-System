@@ -49,8 +49,10 @@ public class EnterAPatient implements Initializable {
     @FXML
     void goBack(ActionEvent event) throws SQLException, IOException {
         Connection connection = Main.oracleDataSource.getConnection();
-        ResultSet resultSet = connection.createStatement()
-                .executeQuery("select stuff_id ,name from secres where Stuff_id = '" + secId + "'");
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("select stuff_id ,name from secres where Stuff_id = ?");
+        preparedStatement.setString(1, secId);
+        ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxmls/MainViewForSec.fxml"));
         Stage stage = (Stage) (((Node) (event.getSource())).getScene().getWindow());
@@ -80,7 +82,8 @@ public class EnterAPatient implements Initializable {
                 }
             }
             System.out.println(max);
-            PreparedStatement preparedStatement = connection.prepareStatement("insert into emervis values(?,?,?,?,?)");
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("insert into emervis values(?,?,?,?,?)");
 
             preparedStatement.setString(1, String.valueOf(++max));
             preparedStatement.setDate(2,new java.sql.Date(new java.util.Date().getTime()));
@@ -100,7 +103,8 @@ public class EnterAPatient implements Initializable {
                     max = temp+1;
                 }
             }
-            PreparedStatement preparedStatement = connection.prepareStatement("insert into departvis values(?,?,?,?,?,?)");
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("insert into departvis values(?,?,?,?,?,?)");
 
             preparedStatement.setString(1, String.valueOf(++max));
             preparedStatement.setDate(2,new java.sql.Date(new java.util.Date().getTime()));
@@ -128,8 +132,10 @@ public class EnterAPatient implements Initializable {
 
             this.patIdTemp = Patient.getValue();
             Connection connection = DriverManager.getConnection(Main.URL,Main.USER_NAME, Main.PASSWORD);
-            ResultSet resultSet = connection.createStatement().executeQuery("Select name from patients where pat_id = '"+
-                    patIdTemp+"'");
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("Select name from patients where pat_id ?");
+            preparedStatement.setString(1, patIdTemp);
+            ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             patLabel.setText(resultSet.getString("name"));
             connection.close();
@@ -145,8 +151,10 @@ public class EnterAPatient implements Initializable {
 
             this.depIdTemp = Department.getValue();
             Connection connection = DriverManager.getConnection(Main.URL,Main.USER_NAME, Main.PASSWORD);
-            ResultSet resultSet = connection.createStatement().executeQuery("Select nameofdep from departments where depart_id = '"+
-                    depIdTemp+"'");
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("Select nameofdep from departments where depart_id = ?");
+            preparedStatement.setString(1, depIdTemp);
+            ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             departLabel.setText(resultSet.getString("nameofdep"));
             connection.close();
@@ -168,13 +176,17 @@ public class EnterAPatient implements Initializable {
             ArrayList<String> patsArray = new ArrayList<String>();
            While1: while (resultSet.next()) {
                 String patIdd = resultSet.getString("pat_id");
-                ResultSet resultSet1 = connection.createStatement().executeQuery("select * from departvis where patid ='"+
-                        patIdd +"'");
+                PreparedStatement preparedStatement =
+                        connection.prepareStatement("select * from departvis where patid =?");
+                preparedStatement.setString(1, patIdd);
+                ResultSet resultSet1 = preparedStatement.executeQuery();
                 while (resultSet1.next()){
                     if (resultSet1.getInt("AVA") == 1) continue While1;
                 }
-                ResultSet resultSet2 = connection.createStatement().executeQuery("select * from emervis where patid ='"+
-                        patIdd +"'");
+                PreparedStatement preparedStatement1 =
+                        connection.prepareStatement("select * from emervis where patid =?");
+                preparedStatement1.setString(1, patIdd);
+                ResultSet resultSet2 = preparedStatement1.executeQuery();
                while (resultSet2.next()){
                    if (resultSet2.getInt("AVA") == 1) continue While1;
                }

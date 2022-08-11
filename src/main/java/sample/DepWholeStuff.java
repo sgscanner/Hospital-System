@@ -8,10 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,8 +22,9 @@ public class DepWholeStuff {
         Connection connection = DriverManager.getConnection(Main.URL, Main.USER_NAME, Main.PASSWORD);
 
         List<DocName> list = new LinkedList<>();
-        ResultSet resultSet = connection.createStatement().executeQuery("select name from doctors where depidfordoc ='"+
-                depId+"'");
+        PreparedStatement preparedStatement = connection.prepareStatement("select name from doctors where depidfordoc =?");
+        preparedStatement.setString(1, depId);
+        ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()){
             list.add(new DocName(resultSet.getString("name")));
 
@@ -37,8 +35,9 @@ public class DepWholeStuff {
         docsTable.setItems(observableList);
 
         List<NurName> list1 = new LinkedList<>();
-        ResultSet resultSet1 = connection.createStatement().executeQuery("select name from nurses where depidfornur ='"+
-                depId+"'");
+        PreparedStatement preparedStatement1 = connection.prepareStatement("select name from nurses where depidfornur =?");
+        preparedStatement1.setString(1, depId);
+        ResultSet resultSet1 = preparedStatement1.executeQuery();
         while (resultSet1.next()){
             list1.add(new NurName(resultSet1.getString("name")));
 

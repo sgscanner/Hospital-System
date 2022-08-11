@@ -17,6 +17,7 @@ import sample.classesfortablviews.DawamDoc;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -44,43 +45,46 @@ public class MainViewForNur {
 
     @FXML
     private TableColumn<DawamDoc, String> timeCol;
-    public void showAll(String id, String name, String depId, String depName ) throws SQLException {
+
+    public void showAll(String id, String name, String depId, String depName) throws SQLException {
         this.docName = name;
         this.docId = id;
         this.depId = depId;
         this.depName = depName;
-        nameLabel.setText("Name: "+ name);
-        depNameLabel.setText("Department: "+ this.depName);
-        idLabel.setText("ID: "+ docId);
+        nameLabel.setText("Name: " + name);
+        depNameLabel.setText("Department: " + this.depName);
+        idLabel.setText("ID: " + docId);
         List<DawamDoc> es = new LinkedList<>();
         Connection connection = Main.oracleDataSource.getConnection();
-        ResultSet resultSet = connection.createStatement().executeQuery("Select * from nurdawam where nurId = '"+docId+"'");
-        while(resultSet.next()){
-            ResultSet resultSet1 = connection.createStatement().executeQuery("select name from days where id ='"+
-                    resultSet.getString("dayid")+"'");
-            String timeFormTo = Integer.toString(resultSet.getInt("starttime")) +" to " +
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("Select * from nurdawam where nurId = ?");
+        preparedStatement.setString(1, docId);
+
+        ResultSet resultSet =preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            preparedStatement = connection.prepareStatement("select name from days where id =?");
+            preparedStatement.setString(1, resultSet.getString("dayid"));
+            ResultSet resultSet1 = preparedStatement.executeQuery();
+            String timeFormTo = Integer.toString(resultSet.getInt("starttime")) + " to " +
                     Integer.toString(resultSet.getInt("endtime"));
             resultSet1.next();
-            es.add(new DawamDoc(resultSet1.getString("name"),timeFormTo));
+            es.add(new DawamDoc(resultSet1.getString("name"), timeFormTo));
 
 
         }
-
 
         ObservableList<DawamDoc> observableList = FXCollections.observableList(es);
         dayCol.setCellValueFactory(new PropertyValueFactory<DawamDoc, String>("dayName"));
         timeCol.setCellValueFactory(new PropertyValueFactory<DawamDoc, String>("timeOfDawam"));
         dawamTable.setItems(observableList);
-
-
     }
-
 
 
     @FXML
     void logOut(ActionEvent event) {
         try {
-            ( (Stage)   (       ((Node)event.getSource()).getScene().getWindow())).setScene(new Scene(FXMLLoader.load(getClass().getResource("../fxmls/mainView.fxml"))));
+            ((Stage) (((Node) event.getSource()).getScene().
+                    getWindow())).setScene(new Scene(FXMLLoader.load(getClass().getResource("../fxmls/mainView.fxml"))));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -98,9 +102,6 @@ public class MainViewForNur {
         DepWholeStuff depWholeStuff = loader.getController();
 
         depWholeStuff.setDepIdAndShow(depId);
-
-
-
 
 
     }

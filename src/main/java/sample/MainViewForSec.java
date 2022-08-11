@@ -30,27 +30,30 @@ public class MainViewForSec {
     @FXML
     public void logOut(ActionEvent event) {
         try {
-            ((Stage) (((Node) event.getSource()).getScene().getWindow())).setScene(new Scene(FXMLLoader.load(getClass().getResource("../fxmls/mainView.fxml"))));
+            ((Stage) (((Node) event.getSource()).getScene().getWindow()))
+                    .setScene(new Scene(FXMLLoader.load(getClass().getResource("../fxmls/mainView.fxml"))));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     @FXML
     public void goToExitPat(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxmls/ExitAptient.fxml"));
         Parent root = loader.load();
         ExitAptient enterAPatient = loader.getController();
         enterAPatient.setSecid(this.secId);
-        ((Stage)((Node)(event.getSource())).getScene().getWindow()).setScene(new Scene(root));
+        ((Stage) ((Node) (event.getSource())).getScene().getWindow()).setScene(new Scene(root));
 
     }
+
     @FXML
     public void goToEnterPat(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxmls/enterAPatient.fxml"));
         Parent root = loader.load();
         EnterAPatient enterAPatient = loader.getController();
         enterAPatient.setSecid(this.secId);
-        ((Stage)((Node)(event.getSource())).getScene().getWindow()).setScene(new Scene(root));
+        ((Stage) ((Node) (event.getSource())).getScene().getWindow()).setScene(new Scene(root));
 
     }
 
@@ -73,10 +76,11 @@ public class MainViewForSec {
         addDocOrNurse.setSecId(secId);
 
     }
+
     @FXML
     void goToAllDocs(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxmls/wholeDocs.fxml"));
-        ((Stage)((Node)event.getSource()).getScene().getWindow()).setScene(new Scene(loader.load()));
+        ((Stage) ((Node) event.getSource()).getScene().getWindow()).setScene(new Scene(loader.load()));
         WholeDocs wholeDocs = loader.getController();
         wholeDocs.setSecIdI(secId);
 
@@ -85,7 +89,7 @@ public class MainViewForSec {
     @FXML
     void goToAllNurs(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxmls/wholeNurses.fxml"));
-        ((Stage)((Node)event.getSource()).getScene().getWindow()).setScene(new Scene(loader.load()));
+        ((Stage) ((Node) event.getSource()).getScene().getWindow()).setScene(new Scene(loader.load()));
         WholeNurses wholeDocs = loader.getController();
         wholeDocs.setSecIdI(secId);
 
@@ -94,7 +98,7 @@ public class MainViewForSec {
     @FXML
     void goToAllPats(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxmls/wholepats.fxml"));
-        ((Stage)((Node)event.getSource()).getScene().getWindow()).setScene(new Scene(loader.load()));
+        ((Stage) ((Node) event.getSource()).getScene().getWindow()).setScene(new Scene(loader.load()));
         WholePats wholeDocs = loader.getController();
         wholeDocs.setSecIdI(secId);
 

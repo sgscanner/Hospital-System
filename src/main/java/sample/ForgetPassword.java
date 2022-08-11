@@ -11,15 +11,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import oracle.jdbc.proxy.annotation.Pre;
 
 import javax.mail.MessagingException;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -63,10 +61,14 @@ public class ForgetPassword implements Initializable {
         myImage.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
             try {
                 if (whereDidICameFrom == 0) {
-                    ((Stage) (((Node) (event.getSource())).getScene().getWindow())).setScene(new Scene(FXMLLoader.load(ForgetPassword.this.getClass().getResource("../fxmls/secreEnter.fxml"))));
+                    ((Stage) (((Node) (event.getSource())).getScene().getWindow()))
+                            .setScene(new Scene(FXMLLoader.load(ForgetPassword.
+                                    this.getClass().getResource("../fxmls/secreEnter.fxml"))));
                 }
                 if (whereDidICameFrom == 1) {
-                    ((Stage) (((Node) (event.getSource())).getScene().getWindow())).setScene(new Scene(FXMLLoader.load(ForgetPassword.this.getClass().getResource("../fxmls/doctorLogin.fxml"))));
+                    ((Stage) (((Node) (event.getSource())).getScene().getWindow()))
+                            .setScene(new Scene(FXMLLoader.load(ForgetPassword.
+                                    this.getClass().getResource("../fxmls/doctorLogin.fxml"))));
                 }
             } catch (IOException ex) {
                 Logger.getLogger(ForgetPassword.class.getName()).log(Level.SEVERE, null, ex);
@@ -99,8 +101,10 @@ public class ForgetPassword implements Initializable {
             Connection connection = DriverManager.getConnection(Main.URL, Main.USER_NAME, Main.PASSWORD);
             if (docRaBut.isSelected()) {
                 type = 0;
-                ResultSet resultSet = connection.createStatement().executeQuery("select  * from doctors where stuff_id ='" +
-                        teteid + "'");
+                PreparedStatement preparedStatement =
+                        connection.prepareStatement("select  * from doctors where stuff_id =?");
+                preparedStatement.setString(1, teteid);
+                ResultSet resultSet = preparedStatement.executeQuery();
                 if (!resultSet.next()) {
                     JOptionPane.showMessageDialog(null, "Your id isn't found");
                     connection.close();
@@ -116,8 +120,10 @@ public class ForgetPassword implements Initializable {
 
             } else if (nurRaBut.isSelected()) {
                 type = 1;
-                ResultSet resultSet = connection.createStatement().executeQuery("select  * from nurses where stuff_id ='" +
-                        teteid + "'");
+                PreparedStatement preparedStatement =
+                        connection.prepareStatement("select  * from nurses where stuff_id =?");
+                preparedStatement.setString(1, teteid);
+                ResultSet resultSet = preparedStatement.executeQuery();
                 if (!resultSet.next()) {
                     JOptionPane.showMessageDialog(null, "Your id isn't found");
                     connection.close();
@@ -135,8 +141,10 @@ public class ForgetPassword implements Initializable {
 
         } else if (whereDidICameFrom == 0) {
             Connection connection = Main.oracleDataSource.getConnection();
-            ResultSet resultSet = connection.createStatement().executeQuery("select  * from secres where stuff_id ='" +
-                    teteid + "'");
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("select  * from secres where stuff_id =?");
+            preparedStatement.setString(1, teteid);
+            ResultSet resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
                 JOptionPane.showMessageDialog(null, "Your id isn't found");
                 connection.close();
@@ -162,8 +170,10 @@ public class ForgetPassword implements Initializable {
         }
         Connection connection = Main.oracleDataSource.getConnection();
         if (whereDidICameFrom == 0) {
-            ResultSet resultSet = connection.createStatement().executeQuery("select stuff_id ,name from secres where stuff_id ='"+
-                    Id+"'");
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("select stuff_id ,name from secres where stuff_id =?");
+            preparedStatement.setString(1, Id);
+            ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             String secId = resultSet.getString("stuff_id");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxmls/MainViewForSec.fxml"));
@@ -178,17 +188,21 @@ public class ForgetPassword implements Initializable {
 
         }
         if (whereDidICameFrom == 1) {
-            if(type == 1) {
-                ResultSet resultSet = connection.createStatement().executeQuery("select * from nurses where Stuff_id ='"+ Id +"'");
-                resultSet.next();
+            if (type == 1) {
+                PreparedStatement preparedStatement =
+                        connection.prepareStatement("select * from nurses where Stuff_id =?");
+                preparedStatement.setString(1, Id);
+                ResultSet resultSet = preparedStatement.executeQuery();
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxmls/MainViewForNur.fxml"));
                 Stage stage = (Stage) (((Node) (event.getSource())).getScene().getWindow());
                 stage.setScene(new Scene(loader.load()));
                 MainViewForNur mainViewForDoctor = loader.getController();
                 String depId = resultSet.getString("depidfornur");
-                ResultSet rs = connection.createStatement().executeQuery("select nameofdep from departments where depart_id = '"+
-                        depId+"'");
+                PreparedStatement preparedStatement1 =
+                        connection.prepareStatement("select nameofdep from departments where depart_id =?");
+                preparedStatement1.setString(1, depId);
+                ResultSet rs = preparedStatement1.executeQuery();
                 rs.next();
                 mainViewForDoctor.showAll(resultSet.getString("stuff_id"), resultSet.getString("name"),
                         depId, rs.getString("nameofdep"));
@@ -197,17 +211,20 @@ public class ForgetPassword implements Initializable {
                 connection.close();
                 return;
 
-            }
-            else if(type ==0){
-                ResultSet resultSet = connection.createStatement().executeQuery("select stuff_id, name, depidfordoc, password from doctors where stuff_id ='"+Id +"'");
+            } else if (type == 0) {
+                PreparedStatement preparedStatement = connection.prepareStatement("select stuff_id, name, depidfordoc, " +
+                        "password from doctors where stuff_id =?");
+                preparedStatement.setString(1, Id);
+                ResultSet resultSet = preparedStatement.executeQuery();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxmls/MainViewForDoctor.fxml"));
                 Stage stage = (Stage) (((Node) (event.getSource())).getScene().getWindow());
                 stage.setScene(new Scene(loader.load()));
                 MainViewForDoctor mainViewForDoctor = loader.getController();
                 resultSet.next();
                 String depId = resultSet.getString("depidfordoc");
-                ResultSet rs = connection.createStatement().executeQuery("select nameofdep from departments where depart_id = '"+
-                        depId+"'");
+                preparedStatement = connection.prepareStatement("select nameofdep from departments where depart_id = ?");
+                preparedStatement.setString(1, depId);
+                ResultSet rs = preparedStatement.executeQuery();
                 rs.next();
                 mainViewForDoctor.showAll(resultSet.getString("stuff_id"), resultSet.getString("name"),
                         depId, rs.getString("nameofdep"));

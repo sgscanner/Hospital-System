@@ -34,6 +34,7 @@ public class MainViewForManager {
         idLabel.setText("ID: " + id);
 
     }
+
     @FXML
     void goToMakeSuccesor(ActionEvent event) throws IOException {
         ((Stage) (((Node) (event.getSource())).getScene().getWindow()))
@@ -45,21 +46,25 @@ public class MainViewForManager {
         ((Stage) (((Node) (event.getSource())).getScene().getWindow()))
                 .setScene(new Scene(FXMLLoader.load(getClass().getResource("../fxmls/mainView.fxml"))));
     }
+
     @FXML
     void goToAddDep(ActionEvent event) throws IOException {
         ((Stage) (((Node) (event.getSource())).getScene().getWindow()))
                 .setScene(new Scene(FXMLLoader.load(getClass().getResource("../fxmls/AddDepart.fxml"))));
     }
+
     @FXML
     void goToModifyDep(ActionEvent event) throws IOException {
         ((Stage) (((Node) (event.getSource())).getScene().getWindow()))
                 .setScene(new Scene(FXMLLoader.load(getClass().getResource("../fxmls/ModifyDep.fxml"))));
     }
+
     @FXML
     void goToAddSec(ActionEvent event) throws IOException {
         ((Stage) (((Node) (event.getSource())).getScene().getWindow()))
                 .setScene(new Scene(FXMLLoader.load(getClass().getResource("../fxmls/AddSec.fxml"))));
     }
+
     @FXML
     void viewDocsRep(ActionEvent event) throws SQLException, JRException, IOException {
         Connection connection = Main.oracleDataSource.getConnection();
@@ -68,7 +73,7 @@ public class MainViewForManager {
 
         JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
         JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null , connection);
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, connection);
         //JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
         net.sf.jasperreports.swing.JRViewer jv = new net.sf.jasperreports.swing.JRViewer(jasperPrint);
 //Insert viewer to a JFrame to make it showable
@@ -76,8 +81,8 @@ public class MainViewForManager {
         jf.getContentPane().add(jv);
         jf.validate();
         jf.setVisible(true);
-        jf.setSize(new Dimension(1024,768));
-        jf.setLocation(1,1);
+        jf.setSize(new Dimension(1024, 768));
+        jf.setLocation(1, 1);
         jf.setExtendedState(JFrame.MAXIMIZED_BOTH);
         jf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         connection.close();
@@ -85,14 +90,14 @@ public class MainViewForManager {
     }
 
     @FXML
-    void viewPatsRep(ActionEvent event) throws SQLException, JRException, IOException{
+    void viewPatsRep(ActionEvent event) throws SQLException, JRException, IOException {
         Connection connection = Main.oracleDataSource.getConnection();
         InputStream inputStream = new FileInputStream(new File("pat_rep1.jrxml"));
         //OutputStream outputStream = new FileOutputStream(new File("Haha.pdf") );
 
         JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
         JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null , connection);
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, connection);
         //JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
         net.sf.jasperreports.swing.JRViewer jv = new net.sf.jasperreports.swing.JRViewer(jasperPrint);
 
@@ -100,19 +105,20 @@ public class MainViewForManager {
         jf.getContentPane().add(jv);
         jf.validate();
         jf.setVisible(true);
-        jf.setSize(new Dimension(1024,768));
-        jf.setLocation(1,1);
+        jf.setSize(new Dimension(1024, 768));
+        jf.setLocation(1, 1);
         jf.setExtendedState(JFrame.MAXIMIZED_BOTH);
         jf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         connection.close();
         inputStream.close();
 
     }
+
     public void visitPastMans(ActionEvent event) throws IOException, SQLException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxmls/PastMangers.fxml"));
         Parent parent = loader.load();
         PastMangers pastMangers = loader.getController();
-        ((Stage)((Node)(event.getSource())).getScene().getWindow()).setScene(new Scene(parent));
+        ((Stage) ((Node) (event.getSource())).getScene().getWindow()).setScene(new Scene(parent));
         pastMangers.fillData();
 
     }

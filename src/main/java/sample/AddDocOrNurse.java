@@ -127,8 +127,10 @@ public class AddDocOrNurse implements Initializable {
     @FXML
     void goBack(ActionEvent event) throws SQLException, IOException {
         Connection connection = Main.oracleDataSource.getConnection();
-        ResultSet resultSet = connection.createStatement()
-                .executeQuery("select stuff_id ,name from secres where Stuff_id = '"+secId+"'");
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("select stuff_id ,name from secres where Stuff_id = ?");
+        preparedStatement.setString(1, secId);
+        ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxmls/MainViewForSec.fxml"));
         Stage stage = (Stage) (((Node) (event.getSource())).getScene().getWindow());
@@ -183,7 +185,7 @@ public class AddDocOrNurse implements Initializable {
                     "stuff_id, SSN, NAME, PHONE, ADDRESS, EMAIL, PASSWORD, DEPIDFORDOC) values(?, ?, ?, ?, ?, ?, ?, ?)");
             wholeInsert.setString(1, id);
             wholeInsert.setString(2, ssnField.getText().trim());
-            wholeInsert.setString(3, nameTextField.getText().trim());
+            wholeInsert.setString(3, nameField.getText().trim());
             wholeInsert.setString(4, phoneField.getText().trim());
             wholeInsert.setString(5, addressField.getText().trim());
             wholeInsert.setString(6, emailField.getText().trim());
@@ -202,7 +204,8 @@ public class AddDocOrNurse implements Initializable {
             }
 
 
-            PreparedStatement preparedStatement = connection.prepareStatement("insert into dawamdac values (?, ?, ?, ?, ?)");
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("insert into dawamdac values (?, ?, ?, ?, ?)");
             for (int i = 0; i<7; i++) {
                 if(daysArray[i].isSelected()) {
                     preparedStatement.setString(1, String.valueOf(++max));
@@ -236,7 +239,7 @@ public class AddDocOrNurse implements Initializable {
                     "stuff_id, SSN, NAME, PHONE, ADDRESS, EMAIL, PASSWORD, DEPIDFORNUR) values(?, ?, ?, ?, ?, ?, ?, ?)");
             wholeInsert.setString(1, id);
             wholeInsert.setString(2, ssnField.getText().trim());
-            wholeInsert.setString(3, nameTextField.getText().trim());
+            wholeInsert.setString(3, nameField.getText().trim());
             wholeInsert.setString(4, phoneField.getText().trim());
             wholeInsert.setString(5, addressField.getText().trim());
             wholeInsert.setString(6, emailField.getText().trim());
@@ -255,7 +258,8 @@ public class AddDocOrNurse implements Initializable {
             }
 
 
-            PreparedStatement preparedStatement = connection.prepareStatement("insert into nurdawam values (?, ?, ?, ?, ?)");
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("insert into nurdawam values (?, ?, ?, ?, ?)");
             for (int i = 0; i<7; i++) {
                 if(daysArray[i].isSelected()) {
                     preparedStatement.setString(1, String.valueOf(++max));
@@ -288,8 +292,10 @@ public class AddDocOrNurse implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            ResultSet resultSet = connection.createStatement().executeQuery("Select * from departments where depart_id = '" +
-                    selectedId + "'");
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("Select * from departments where depart_id = ?");
+            preparedStatement.setString(1, selectedId);
+            ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
 
             nameTextField.setText(resultSet.getString("Nameofdep"));

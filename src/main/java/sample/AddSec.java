@@ -48,7 +48,8 @@ public class AddSec {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxmls/MainViewForManager.fxml"));
         Parent root = loader.load();
         MainViewForManager mainViewForManager = loader.getController();
-        mainViewForManager.setNameAndId(resultSet.getString("manager_name"), resultSet.getString("manager_id"));
+        mainViewForManager.setNameAndId(resultSet.getString("manager_name"),
+                resultSet.getString("manager_id"));
         ((Stage)((Node)event.getSource()).getScene().getWindow()).setScene(new Scene(root));
     }
 
@@ -89,7 +90,6 @@ public class AddSec {
         insertStatement.setString(4, passWord);
         insertStatement.setString(5, phoneField.getText().trim());
         insertStatement.setString(6, addressField.getText().trim());
-
         insertStatement.setString(7, ssnField.getText().trim());
 
 

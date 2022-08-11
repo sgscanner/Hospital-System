@@ -50,13 +50,16 @@ public class GiveMedView  implements Initializable {
         Stage stage = (Stage) (((Node) (event.getSource())).getScene().getWindow());
         stage.setScene(new Scene(loader.load()));
         Connection connection = DriverManager.getConnection(Main.URL, Main.USER_NAME, Main.PASSWORD);
-        ResultSet resultSet = connection.createStatement().executeQuery("select depidfordoc, name from doctors where stuff_id ='"+
-                docId+"'");
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("select depidfordoc, name from doctors where stuff_id =?");
+        preparedStatement.setString(1, docId);
+        ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
         MainViewForDoctor mainViewForDoctor = loader.getController();
         String depId = resultSet.getString("depidfordoc");
-        ResultSet rs = connection.createStatement().executeQuery("select nameofdep from departments where depart_id = '"+
-                depId+"'");
+        preparedStatement = connection.prepareStatement("select nameofdep from departments where depart_id =?");
+        preparedStatement.setString(1, depId);
+        ResultSet rs = preparedStatement.executeQuery();
         rs.next();
         mainViewForDoctor.showAll(docId, resultSet.getString("name"),
                 depId, rs.getString("nameofdep"));
@@ -80,7 +83,8 @@ public class GiveMedView  implements Initializable {
     void submit(ActionEvent event) throws SQLException {
         Connection connection = DriverManager.getConnection(Main.URL, Main.USER_NAME, Main.PASSWORD);
 
-        PreparedStatement preparedStatement = connection.prepareStatement("insert into treats values(?, ?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("insert into treats values(?, ?, ?, ?, ?, ?, ?, ?)");
         int max= 0;
         ResultSet resultSet = connection.createStatement().executeQuery("select tid from treats ");
         while (resultSet.next()){
@@ -113,7 +117,8 @@ public class GiveMedView  implements Initializable {
             medecineSelect.getItems().clear();
             Connection connection = Main.oracleDataSource.getConnection();
             ArrayList<String> arrayList = new ArrayList<>();
-            ResultSet resultSet = connection.createStatement().executeQuery("select pat_id from patients ");
+            ResultSet resultSet =
+                    connection.createStatement().executeQuery("select pat_id from patients ");
             while (resultSet.next()){
                 arrayList.add(resultSet.getString("pat_id"));
             }
@@ -139,8 +144,10 @@ public class GiveMedView  implements Initializable {
         try {
             tempPatId = patSelect.getValue();
             Connection connection = Main.oracleDataSource.getConnection();
-            ResultSet resultSet = connection.createStatement().executeQuery("select name from patients where pat_id ='"+
-                    tempPatId+"'");
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("select name from patients where pat_id =?");
+            preparedStatement.setString(1, tempPatId);
+            ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             patField.setText(resultSet.getString("name"));
             connection.close();
@@ -154,8 +161,10 @@ public class GiveMedView  implements Initializable {
         try {
             tempMedId = medecineSelect.getValue();
             Connection connection = Main.oracleDataSource.getConnection();
-            ResultSet resultSet = connection.createStatement().executeQuery("select medname from medecines where medid ='"+
-                    tempMedId+"'");
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("select medname from medecines where medid =?");
+            preparedStatement.setString(1, tempMedId);
+            ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             medecineField.setText(resultSet.getString("medname"));
             connection.close();

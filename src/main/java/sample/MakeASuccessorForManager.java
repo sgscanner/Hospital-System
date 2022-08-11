@@ -125,7 +125,7 @@ public class MakeASuccessorForManager {
 
 
         connection.commit();
-        JOptionPane.showMessageDialog(null, "Succesfully, the new manager registered");
+        JOptionPane.showMessageDialog(null, "Successfully, the new manager registered");
         connection.close();
         ((Stage) (((Node) (event.getSource())).getScene().getWindow()))
                 .setScene(new Scene(FXMLLoader.load(getClass().getResource("../fxmls/mainView.fxml"))));

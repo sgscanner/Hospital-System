@@ -12,16 +12,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import org.apache.poi.openxml4j.opc.PackageRelationship;
 import sample.classesfortablviews.DoctorInfoForView;
 import sample.classesfortablviews.NurseInfoForView;
 
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -46,8 +44,10 @@ public class WholeNurses implements Initializable {
     public void deleteSel(ActionEvent event) throws SQLException {
         String id = table.getSelectionModel().getSelectedItem().getId();
         Connection connection = DriverManager.getConnection(Main.URL, Main.USER_NAME, Main.PASSWORD);
-        connection.createStatement().executeUpdate("delete from nurses where stuff_id ='"+
-                id+"'");
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("delete from nurses where stuff_id = ?");
+        preparedStatement.setString(1, id);
+        preparedStatement.executeUpdate();
         JOptionPane.showMessageDialog(null, "Deleted Successfully");
         fillData();
         connection.close();
@@ -57,8 +57,10 @@ public class WholeNurses implements Initializable {
     @FXML
     void goBack(ActionEvent event) throws SQLException, IOException {
         Connection connection = Main.oracleDataSource.getConnection();
-        ResultSet resultSet = connection.createStatement()
-                .executeQuery("select stuff_id ,name from secres where Stuff_id = '"+secId+"'");
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("select stuff_id ,name from secres where Stuff_id = ?");
+        preparedStatement.setString(1, secId);
+        ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxmls/MainViewForSec.fxml"));
         Stage stage = (Stage) (((Node) (event.getSource())).getScene().getWindow());
@@ -75,11 +77,14 @@ public class WholeNurses implements Initializable {
             table.getItems().clear();
             List<NurseInfoForView> list = new LinkedList<>();
             Connection connection = DriverManager.getConnection(Main.URL, Main.USER_NAME, Main.PASSWORD);
-            ResultSet resultSet = connection.createStatement().executeQuery("select name, stuff_id, depidfornur from nurses");
+            ResultSet resultSet =
+                    connection.createStatement().executeQuery("select name, stuff_id, depidfornur from nurses");
             while (resultSet.next()){
                 //String depId = resultSet.getString("depidfordoc");
-                ResultSet resultSet1 = connection.createStatement().executeQuery("select nameofdep from departments where depart_id ='"+
-                        resultSet.getString("depidfornur")+"'");
+                PreparedStatement preparedStatement =
+                        connection.prepareStatement("select nameofdep from departments where depart_id = ?");
+                preparedStatement.setString(1, resultSet.getString("depidfornur"));
+                ResultSet resultSet1 = preparedStatement.executeQuery();
                 resultSet1.next();
                 list.add(
                         new NurseInfoForView(resultSet.getString("stuff_id"), resultSet.getString("name"),

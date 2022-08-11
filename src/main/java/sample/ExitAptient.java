@@ -34,23 +34,25 @@ public class ExitAptient implements Initializable {
     @FXML
     void exitThePat(ActionEvent event) throws SQLException {
         boolean fromWhere = false;
-        if(depVisIds.contains(tempId)) fromWhere = true;
+        if (depVisIds.contains(tempId)) fromWhere = true;
         Connection connection = Main.oracleDataSource.getConnection();
-        if(!fromWhere){
-            PreparedStatement preparedStatement = connection.prepareStatement("update emervis set ava = 0, endtime = ? where patid ='"+
-                    tempId+"'");
-            preparedStatement.setDate(1,new java.sql.Date(new java.util.Date().getTime()));
+        if (!fromWhere) {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("update emervis set ava = 0, endtime = ? where patid =?");
+            preparedStatement.setDate(1, new java.sql.Date(new java.util.Date().getTime()));
+            preparedStatement.setString(2, tempId);
             preparedStatement.executeUpdate();
             JOptionPane.showMessageDialog(null, "Exited successfully from Emergency ");
-            initialize(null, null );
+            initialize(null, null);
             return;
-        } else if(fromWhere){
-            PreparedStatement preparedStatement = connection.prepareStatement("update departvis set ava = 0, endtime = ? where patid ='"+
-                    tempId+"'");
-            preparedStatement.setDate(1,new java.sql.Date(new java.util.Date().getTime()));
+        } else if (fromWhere) {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("update departvis set ava = 0, endtime = ? where patid =?");
+            preparedStatement.setDate(1, new java.sql.Date(new java.util.Date().getTime()));
+            preparedStatement.setString(2, tempId);
             preparedStatement.executeUpdate();
             JOptionPane.showMessageDialog(null, "Exited successfully from department ");
-            initialize(null, null );
+            initialize(null, null);
             return;
         }
 
@@ -61,8 +63,10 @@ public class ExitAptient implements Initializable {
     @FXML
     void goBack(ActionEvent event) throws SQLException, IOException {
         Connection connection = Main.oracleDataSource.getConnection();
-        ResultSet resultSet = connection.createStatement()
-                .executeQuery("select stuff_id ,name from secres where Stuff_id = '"+secId+"'");
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("select stuff_id ,name from secres where Stuff_id = ?");
+        preparedStatement.setString(1, secId);
+        ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxmls/MainViewForSec.fxml"));
         Stage stage = (Stage) (((Node) (event.getSource())).getScene().getWindow());
@@ -73,6 +77,7 @@ public class ExitAptient implements Initializable {
         connection.close();
 
     }
+
     ArrayList<String> emerVisIds = new ArrayList<>();
 
     ArrayList<String> depVisIds = new ArrayList<>();
@@ -82,41 +87,44 @@ public class ExitAptient implements Initializable {
         patChoice.getItems().clear();
         emerVisIds.clear();
         depVisIds.clear();
-        try{
+        try {
             Connection connection = DriverManager.getConnection(Main.URL, Main.USER_NAME, Main.PASSWORD);
             ResultSet resultSet = connection.createStatement().executeQuery("select patid from emervis where ava =1");
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 emerVisIds.add(resultSet.getString("patid"));
             }
-            ResultSet resultSet1 = connection.createStatement().executeQuery("select patid from departvis where ava =1");
-            while (resultSet1.next()){
+            ResultSet resultSet1 =
+                    connection.createStatement().executeQuery("select patid from departvis where ava =1");
+            while (resultSet1.next()) {
                 depVisIds.add(resultSet1.getString("patid"));
             }
             connection.close();
 
             patChoice.getItems().addAll(depVisIds);
-            patChoice.getItems().addAll( emerVisIds);
+            patChoice.getItems().addAll(emerVisIds);
             patChoice.setOnAction(this::comboAction);
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     String tempId;
-    public void comboAction(ActionEvent event)  {
+
+    public void comboAction(ActionEvent event) {
         tempId = patChoice.getValue();
         try {
 
 
             Connection connection = DriverManager.getConnection(Main.URL, Main.USER_NAME, Main.PASSWORD);
-            ResultSet resultSet = connection.createStatement().executeQuery("Select name from patients where pat_id = '" +
-                    tempId + "'");
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("Select name from patients where pat_id = ?");
+            preparedStatement.setString(1, tempId);
+            ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             patLabel.setText(resultSet.getString("name"));
             connection.close();
-        }
-        catch (Exception e ){
+        } catch (Exception e) {
 
         }
 

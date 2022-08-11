@@ -41,6 +41,7 @@ public class ManagerLogIN implements Initializable {
 
     @FXML
     private int secVerNum;
+
     @FXML
     public void enableForgPass() throws SQLException, MessagingException {
         ResultSet resultSet = DriverManager.getConnection(Main.URL, Main.USER_NAME, Main.PASSWORD).createStatement()
@@ -62,40 +63,48 @@ public class ManagerLogIN implements Initializable {
 
     @FXML
     public void managerLogIn(ActionEvent event) throws SQLException, IOException {
-        ResultSet resultSet0 = DriverManager.getConnection(Main.URL, Main.USER_NAME, Main.PASSWORD).createStatement()
+        Connection connection = DriverManager.getConnection(Main.URL, Main.USER_NAME, Main.PASSWORD);
+        ResultSet resultSet0 = connection.createStatement()
                 .executeQuery("Select * from managers where currently = 1");
         resultSet0.next();
-        if(resultSet0.getString("manager_id").equals(manIDField.getText().trim()) && resultSet0.getString("pass").equals(manPassField.getText().trim())){
-            ResultSet resultSet = DriverManager.getConnection(Main.URL, Main.USER_NAME, Main.PASSWORD).createStatement()
+        if (resultSet0.getString("manager_id").equals(manIDField.getText().trim())
+                && resultSet0.getString("pass").equals(manPassField.getText().trim())) {
+
+            ResultSet resultSet = connection.createStatement()
                     .executeQuery("Select * from managers where currently = 1");
             resultSet.next();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxmls/MainViewForManager.fxml"));
             Parent root = loader.load();
             MainViewForManager mainViewForManager = loader.getController();
-            mainViewForManager.setNameAndId(resultSet.getString("manager_name"), resultSet.getString("manager_id"));
-            ((Stage)((Node)event.getSource()).getScene().getWindow()).setScene(new Scene(root));
-        }
-        else JOptionPane.showMessageDialog(null, "The Id/pass is invalid");
+            mainViewForManager.setNameAndId(resultSet.getString("manager_name"),
+                    resultSet.getString("manager_id"));
+            ((Stage) ((Node) event.getSource()).getScene().getWindow()).setScene(new Scene(root));
+            connection.close();
+        } else JOptionPane.showMessageDialog(null, "The Id/pass is invalid");
     }
+
     @FXML
     public void checkThePass(ActionEvent event) throws SQLException, IOException {
-        if((Integer.parseInt(forgPassPass1.getText().trim()) == firstVerNum) && (Integer.parseInt(forgPassPass2.getText().trim()) == secVerNum)){
-            ResultSet resultSet = DriverManager.getConnection(Main.URL, Main.USER_NAME, Main.PASSWORD).createStatement()
+        if ((Integer.parseInt(forgPassPass1.getText().trim()) == firstVerNum)
+                && (Integer.parseInt(forgPassPass2.getText().trim()) == secVerNum)) {
+            Connection connection = DriverManager.getConnection(Main.URL, Main.USER_NAME, Main.PASSWORD);
+            ResultSet resultSet = connection.createStatement()
                     .executeQuery("Select * from managers where currently = 1");
             resultSet.next();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxmls/MainViewForManager.fxml"));
             Parent root = loader.load();
             MainViewForManager mainViewForManager = loader.getController();
-            mainViewForManager.setNameAndId(resultSet.getString("manager_name"), resultSet.getString("manager_id"));
-            ((Stage)((Node)event.getSource()).getScene().getWindow()).setScene(new Scene(root));
+            mainViewForManager.setNameAndId(resultSet.getString("manager_name"),
+                    resultSet.getString("manager_id"));
+            connection.close();
+            ((Stage) ((Node) event.getSource()).getScene().getWindow()).setScene(new Scene(root));
 
 
-        }else JOptionPane.showMessageDialog(null, "One of the passwords is wrong");
-
-
+        } else JOptionPane.showMessageDialog(null, "One of the passwords is wrong");
 
 
     }
+
     public void returnToMainView(ActionEvent event) throws IOException {
         ((Stage) (((Node) (event.getSource())).getScene().getWindow()))
                 .setScene(new Scene(FXMLLoader.load(getClass().getResource("../fxmls/mainView.fxml"))));

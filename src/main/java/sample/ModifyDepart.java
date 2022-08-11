@@ -14,10 +14,7 @@ import javafx.stage.Stage;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -39,9 +36,13 @@ public class ModifyDepart implements Initializable {
     @FXML
     void submit(ActionEvent event) throws SQLException {
         Connection connection = Main.oracleDataSource.getConnection();
-        connection.createStatement().executeUpdate("update departments set nameofdep ='"+
-                nameTextField.getText().trim()+"', Phone = '"+phoneTextField.getText().trim()+"', capacity = "+
-                Integer.parseInt(capTextField.getText().trim())+"where depart_id = '"+selectedId+"'");
+        PreparedStatement preparedStatement = connection.prepareStatement("update departments set nameofdep = ?," +
+                " Phone = ?, capacity = ? where depart_id = ?");
+        preparedStatement.setString(1, nameTextField.getText().trim());
+        preparedStatement.setString(2, phoneTextField.getText().trim());
+        preparedStatement.setInt(3, Integer.parseInt(capTextField.getText().trim()));
+        preparedStatement.setString(4, selectedId);
+        preparedStatement.executeUpdate();
         connection.close();
         JOptionPane.showMessageDialog(null, "Updated successfully");
 
@@ -108,8 +109,10 @@ public class ModifyDepart implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            ResultSet resultSet = connection.createStatement().executeQuery("Select * from departments where depart_id = '" +
-                    selectedId + "'");
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("Select * from departments where depart_id = ?");
+            preparedStatement.setString(1, selectedId);
+            ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             capTextField.setText(String.valueOf(resultSet.getInt("Capacity")));
             nameTextField.setText(resultSet.getString("Nameofdep"));

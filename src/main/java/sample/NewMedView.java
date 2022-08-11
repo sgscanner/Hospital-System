@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -67,7 +68,10 @@ public class NewMedView {
 
         }
         try {
-            connection.createStatement().executeUpdate("insert into medecines values( '" + tempMedId + "','" + medName.getText() + "')");
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into medecines values( ?,?)");
+            preparedStatement.setString(1, tempMedId);
+            preparedStatement.setString(2, medName.getText().trim());
+            preparedStatement.executeUpdate();
             JOptionPane.showMessageDialog(null, "added successfully");
             connection.close();
         } catch (SQLException e) {

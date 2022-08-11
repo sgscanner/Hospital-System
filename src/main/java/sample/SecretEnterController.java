@@ -23,7 +23,8 @@ public class SecretEnterController {
     private PasswordField pass;
 
     public void returnToMainView(ActionEvent event) throws IOException {
-        ((Stage) (((Node) (event.getSource())).getScene().getWindow())).setScene(new Scene(FXMLLoader.load(getClass().getResource("../fxmls/mainView.fxml"))));
+        ((Stage) (((Node) (event.getSource())).getScene().getWindow()))
+                .setScene(new Scene(FXMLLoader.load(getClass().getResource("../fxmls/mainView.fxml"))));
 
     }
 
